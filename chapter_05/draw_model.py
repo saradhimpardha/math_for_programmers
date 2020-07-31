@@ -3,7 +3,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 import matplotlib.cm
-from camera import Camera
+import camera
 from vectors import *
 from math import *
 from transforms import *
@@ -30,13 +30,13 @@ def Axes():
     glEnd()
 
 def draw_model(faces, color_map=blues, light=(1,2,3),
-                camera=Camera("default_camera",[]),
                 glRotatefArgs=None,
                 get_matrix=None):
     pygame.init()
     display = (400,400)
     window = pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
-    camera.set_window(window)
+    cam = camera.default_camera
+    cam.set_window(window)
     gluPerspective(45, 1, 0.1, 50.0)
 
     glTranslatef(0.0,0.0, -5)
@@ -46,7 +46,7 @@ def draw_model(faces, color_map=blues, light=(1,2,3),
     glEnable(GL_DEPTH_TEST)
     glCullFace(GL_BACK)
 
-    while camera.is_shooting():
+    while cam.is_shooting():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -68,5 +68,5 @@ def draw_model(faces, color_map=blues, light=(1,2,3),
                 glColor3fv((color[0], color[1], color[2]))
                 glVertex3fv(vertex)
         glEnd()
-        camera.tick()
+        cam.tick()
         pygame.display.flip()

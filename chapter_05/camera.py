@@ -4,7 +4,7 @@ from math import ceil
 import os
 
 class Camera():
-    def __init__(self,name,shots=[],dir="figs",comic_strip=None):
+    def __init__(self,name,shots=[],dir="figures",comic_strip=None):
         self.dir = os.path.join(os.getcwd(), dir)
         if not os.path.exists(self.dir):
             os.makedirs(self.dir)
@@ -58,7 +58,7 @@ class Camera():
         for i,im in enumerate(images):
             x_offset = (i % self.comic_strip) * width
             y_offset = (i / self.comic_strip) * height
-            # print('offsets',(x_offset,y_offset))
+            print('offsets',(x_offset,y_offset))
             new_im.paste(im, (x_offset,y_offset))
 
         new_im.save(os.path.join(self.dir, self.name +'_comic_strip.png'))
@@ -96,3 +96,5 @@ class Camera():
 
     def get_fps(self):
         return self.clock.get_fps()
+
+default_camera = Camera("default_camera",[])

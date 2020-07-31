@@ -7,6 +7,7 @@ with open("teapot.off") as f:
 vertex_count, face_count, edge_count = map(int,lines[1].split())
 
 def triple(xs):
+    xs = list(xs)
     return (xs[0],xs[1],xs[2])
 
 def load_vertices():
@@ -20,7 +21,7 @@ def load_polygons():
     polys = []
     vertices = load_vertices()
     for i in range(2+vertex_count,2+vertex_count+face_count):
-        poly = map(vertices.__getitem__, map(int,lines[i].split()[1:]))
+        poly = list(map(vertices.__getitem__, map(int,lines[i].split()[1:])))
         polys.append(poly)
     return polys
 
